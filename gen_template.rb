@@ -66,30 +66,12 @@ def gen_template(
     provisioners: [
       { type: 'shell', script: './scripts/install.sh' }
     ],
-    'post-processors': [[
+    'post-processors': [
       {
         type: 'vagrant',
         keep_input_artifact: false,
       },
-      {
-        type: 'atlas',
-        only: ['virtualbox-iso'],
-        artifact: artifact,
-        artifact_type: 'vagrant.box',
-        metadata: {
-          provider: 'virtualbox',
-          description: <<-DESC
-A minimal NixOS build based on the #{File.basename iso_url}.
-
-See https://github.com/zimbatm/nixbox for project details.
-          DESC
-        }
-      },
-    ]],
-    push: {
-      name: build,
-      vcs: true,
-    },
+    ],
   )
 end
 
