@@ -15,7 +15,7 @@ end
 
 def builder(**opts)
   {
-    boot_wait: '30s',
+    boot_wait: '40s',
     boot_command: [
       'echo http://{{ .HTTPIP }}:{{ .HTTPPort}} > .packer_http<enter>',
       'mkdir -m 0700 .ssh<enter>',
@@ -77,6 +77,6 @@ end
 
 # main
 arch = ARGV[0] || fail('usage: gen_template.rb <ARCH>')
-isos = JSON.load(open('iso_urls.json'), nil, symbolize_names: true)
+isos = JSON.load(open('iso_urls.json'), nil, create_additions: false, symbolize_names: true)
 config = isos[arch.to_sym] || fail("iso not found for arch #{arch}")
 gen_template(arch: arch, **config)
